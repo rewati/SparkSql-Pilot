@@ -58,5 +58,9 @@ class EmployeeAndDepartmentOperationsTest extends FunSuite {
       .filter(col("age") > 0).filter(col("age") < 55)
       .filter(col("department") === "Area51" || col("department") === "Secret Dep").createOrReplaceTempView("employee1")
     spark.sql(sql1).show(50)
+
+    dataFrame1.write.parquet("src/test/resources/data3.parquet")
+    val parquetFileDF = spark.read.parquet("src/test/resources/data3.parquet")
+    parquetFileDF.filter(col("department") === "Secret Dep").show()
   }
 }
