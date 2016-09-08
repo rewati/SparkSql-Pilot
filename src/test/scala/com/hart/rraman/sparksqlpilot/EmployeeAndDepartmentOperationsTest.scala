@@ -55,8 +55,8 @@ class EmployeeAndDepartmentOperationsTest extends FunSuite {
     spark.sql("select * from employee").show(100)
     spark.sql(sql1).show(50)
     dataFrame.filter(col("name") === "Rewati Raman" )
-      .filter(col("age") > 50).filter(col("age") < 55)
-      .filter(col("department") === "Area51" || col("department") === "Secret Dep").createOrReplaceTempView("employee")
+      .filter(col("age") > 0).filter(col("age") < 55)
+      .filter(col("department") === "Area51" || col("department") === "Secret Dep").createOrReplaceTempView("employee1")
     spark.sql(sql1).show(50)
   }
 }
