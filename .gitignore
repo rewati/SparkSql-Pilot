@@ -1,7 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 .gitignore
 .idea/
-project/
+project/target/
 spark-warehouse/
 src/main/java/
 src/main/scala-2.11/
