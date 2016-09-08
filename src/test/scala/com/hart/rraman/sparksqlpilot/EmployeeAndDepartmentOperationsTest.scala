@@ -26,22 +26,28 @@ class EmployeeAndDepartmentOperationsTest extends FunSuite {
 
   test("Read from Json file and do various funny stuff :) using spark dataFrame") {
     println(" ***************** Print 50 rows ***********************")
+
     dataFrame.show(50)
     println(" ***************** Print 50 rows whose name are REWATI RAMAN " +
       "and age between 50 to 55 and work in department area 51 or Secret Dep" +
       "***********************")
+
     dataFrame.filter(col("name") === "Rewati Raman" )
       .filter(col("age") > 50).filter(col("age") < 55)
       .filter(col("department") === "Area51" || col("department") === "Secret Dep")
       .show(50)
+
     println("*************Print row count whose name are REWATI RAMAN " +
       "and age between 50 to 55 and work in department area 51 or Secret Dep ")
+
     val c = dataFrame.filter(col("name") === "Rewati Raman" )
       .filter(col("age") > 50).filter(col("age") < 55)
       .filter(col("department") === "Area51" || col("department") === "Secret Dep")
       .count()
     println(c)
+
     println("******** group by department *********")
+
     dataFrame.filter(col("name") === "Rewati Raman" )
       .filter(col("age") > 50).filter(col("age") < 55)
       .filter(col("department") === "Area51" || col("department") === "Secret Dep")
@@ -51,7 +57,9 @@ class EmployeeAndDepartmentOperationsTest extends FunSuite {
     val departmentDataFile2 = "src/test/resources/data3.json"
     val dataFrame1 = jsonSqlDataframe.getDataFrameFromJsonFile(departmentDataFile2)
     dataFrame1.createTempView("department")
+
     println("***************** select * from employee ************")
+
     spark.sql("select * from employee").show(100)
     spark.sql(sql1).show(50)
     dataFrame.filter(col("name") === "Rewati Raman" )
