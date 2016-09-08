@@ -19,6 +19,10 @@ class EmployeeAndDepartmentOperationsTest extends FunSuite {
   val employeeDataFile = "src/test/resources/data2.json"
   val jsonSqlDataframe = new JsonFileToSQLRDDProcessor(spark)
   val dataFrame = jsonSqlDataframe.getDataFrameFromJsonFile(employeeDataFile)
+  val sql1 = "select employee.name as name,employee.age as age,employee.department " +
+    "as department, d.description as description from employee  JOIN department as " +
+    "d on employee.department =  d.department where employee.name='Rewati Raman' and " +
+    "age < 50 and age > 40 "
 
   test("Read from Json file and do various funny stuff :) using spark dataFrame") {
     println(" ***************** Print 50 rows ***********************")
@@ -49,8 +53,10 @@ class EmployeeAndDepartmentOperationsTest extends FunSuite {
     dataFrame1.createTempView("department")
     println("***************** select * from employee ************")
     spark.sql("select * from employee").show(100)
-    spark.sql("select employee.name as name,employee.age as age,employee.department as department, " +
-      "d.description as description from employee  JOIN department as d" +
-      " on employee.department =  d.department where employee.name='Rewati Raman' and age < 50 and age > 40 ").show(50)
+    spark.sql(sql1).show(50)
+    dataFrame.filter(col("name") === "Rewati Raman" )
+      .filter(col("age") > 50).filter(col("age") < 55)
+      .filter(col("department") === "Area51" || col("department") === "Secret Dep").createOrReplaceTempView("employee")
+    spark.sql(sql1).show(50)
   }
 }

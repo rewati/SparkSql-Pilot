@@ -1,0 +1,10 @@
+# Created by .ignore support plugin (hsz.mobi)
+.gitignore
+.idea/
+project/
+spark-warehouse/
+src/main/java/
+src/main/scala-2.11/
+src/test/java/
+src/test/scala-2.11/
+target/
